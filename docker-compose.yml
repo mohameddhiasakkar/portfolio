@@ -1,0 +1,11 @@
+version: "3.9"
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: src/app/dockerfile
+    container_name: mon_app_frontend
+    restart: always
+    ports:
+      - "4200:80"
