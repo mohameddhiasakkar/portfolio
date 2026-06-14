@@ -12,11 +12,13 @@ export class App implements OnInit, AfterViewInit {
   private el = inject(ElementRef);
 
   ngOnInit() {
-    // Initialize theme from localStorage on load
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-      this.isDarkMode.set(true);
-      document.body.classList.add('dark-mode');
+    if (typeof window !== 'undefined') {
+      const savedTheme = localStorage.getItem('theme');
+
+      if (savedTheme === 'dark') {
+        this.isDarkMode.set(true);
+        document.body.classList.add('dark-mode');
+      }
     }
   }
 
@@ -62,7 +64,9 @@ export class App implements OnInit, AfterViewInit {
   protected toggleDarkMode() {
     this.isDarkMode.update(v => !v);
     const darkMode = this.isDarkMode();
-    document.body.classList.toggle('dark-mode', darkMode);
-    localStorage.setItem('theme', darkMode ? 'dark' : 'light');
+    if (typeof window !== 'undefined') {
+      document.body.classList.toggle('dark-mode', darkMode);
+      localStorage.setItem('theme', darkMode ? 'dark' : 'light');
+    }
   }
 }
